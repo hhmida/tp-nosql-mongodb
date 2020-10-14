@@ -32,8 +32,8 @@ replication:
 </code></pre></div> </div> </div> </details> <ul> <li>Démarrer les 2 services et initier le Replica Set.</li> </ul> <div class="highlight"><pre><span></span><code>start mongod --config C:<span class="se">\c</span>fg<span class="se">\c</span>s1.conf
 start mongod --config C:<span class="se">\c</span>fg<span class="se">\c</span>s2.conf
 mongo --port <span class="m">40001</span>
-</code></pre></div> <div class="highlight"><pre><span></span><code><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
-<span class="nx">rs</span><span class="p">.</span><span class="nx">add</span> <span class="p">(</span><span class="s2">"localhost:40002"</span><span class="p">)</span>
+</code></pre></div> <div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
+<span class="o">&gt;</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">add</span> <span class="p">(</span><span class="s2">"localhost:40002"</span><span class="p">)</span>
 </code></pre></div> <h3 id="lancer-chaque-shard-en-replica-set"><img alt="2⃣" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/32-20e3.svg" title=":two:"/> Lancer chaque shard en Replica Set<a class="headerlink" href="#lancer-chaque-shard-en-replica-set" title="Permanent link">¶</a></h3> <ul> <li>Créer les dossiers : C:\data\sh1, C:\data\sh2</li> <li>Préparer les fichiers de configuration</li> </ul> <details class="hint" open="open"><summary>Configuration des Shard Server</summary><div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"/><label for="__tabbed_2_1">sh1.cfg</label><div class="tabbed-content"> <div class="highlight"><pre><span></span><code>storage:
   dbPath: C:<span class="se">\d</span>ata<span class="se">\s</span>h1
   journal:
@@ -67,9 +67,9 @@ replication:
 </code></pre></div> </div> </div> </details> <ul> <li>Démarrer les 2 services et initier le Replica Set.</li> </ul> <div class="highlight"><pre><span></span><code>start mongod --config C:<span class="se">\c</span>fg<span class="se">\s</span>h1.conf
 start mongod --config C:<span class="se">\c</span>fg<span class="se">\s</span>h2.conf
 mongo --port <span class="m">50001</span>
-</code></pre></div> <div class="highlight"><pre><span></span><code><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
+</code></pre></div> <div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
 </code></pre></div> <p>Puis le deuxième serveur <div class="highlight"><pre><span></span><code>mongo --port <span class="m">50002</span>
-</code></pre></div></p> <div class="highlight"><pre><span></span><code><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
+</code></pre></div></p> <div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
 </code></pre></div> <h3 id="lancer-le-routeur"><img alt="3⃣" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/33-20e3.svg" title=":three:"/> Lancer le Routeur<a class="headerlink" href="#lancer-le-routeur" title="Permanent link">¶</a></h3> <ul> <li>Le fichier de configuration</li> </ul> <div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"/><label for="__tabbed_3_1">mongos.cfg</label><div class="tabbed-content"> <div class="highlight"><pre><span></span><code>sharding:
   configDB: csrs/localhost:40001,localhost:40002
 net:
@@ -81,8 +81,8 @@ systemLog:
   logAppend: <span class="nb">true</span>
 </code></pre></div> </div> </div> <ul> <li>Démarrer et enregistrer les Shard</li> </ul> <div class="highlight"><pre><span></span><code>start mongos --config C:<span class="se">\c</span>fg<span class="se">\m</span>ongos.cfg
 mongo --port <span class="m">26000</span>
-</code></pre></div> <div class="highlight"><pre><span></span><code><span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">"shrs1/127.0.0.1:50001"</span><span class="p">)</span>
-<span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">"shrs2/127.0.0.1:50002"</span><span class="p">)</span>
+</code></pre></div> <div class="highlight"><pre><span></span><code><span class="o">&gt;</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">"shrs1/127.0.0.1:50001"</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">"shrs2/127.0.0.1:50002"</span><span class="p">)</span>
 </code></pre></div> <h3 id="distribuer-une-base-de-donnees"><img alt="4⃣" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/34-20e3.svg" title=":four:"/> Distribuer une base de données<a class="headerlink" href="#distribuer-une-base-de-donnees" title="Permanent link">¶</a></h3> <ul> <li>Créer une nouvelle base et nouvelle collection. Puis créer un index sur _id.</li> </ul> <p><div class="highlight"><pre><span></span><code><span class="nx">use</span> <span class="nx">testDB</span><span class="p">;</span>
 <span class="nx">sh</span><span class="p">.</span><span class="nx">enableSharding</span><span class="p">(</span><span class="s2">"testDB"</span><span class="p">);</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">"test"</span><span class="p">);</span>
