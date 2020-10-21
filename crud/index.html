@@ -67,9 +67,10 @@
       <span class="nx">$elemMatch</span> <span class="o">:</span><span class="p">{</span>
         <span class="s2">"grade"</span> <span class="o">:</span> <span class="s2">"C"</span><span class="p">,</span>
         <span class="s2">"score"</span> <span class="o">:</span> <span class="p">{</span><span class="nx">$lt</span> <span class="o">:</span><span class="mi">40</span><span class="p">}</span>
+      <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span>
-  <span class="p">{</span><span class="s2">"score"</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">})</span>
+  <span class="p">{</span><span class="s2">"grades.score"</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">})</span>
 </code></pre></div> </div> </div> <details class="warning" open="open"><summary></summary><p><mark>$elemMatch</mark> permet de vérifier les conditions sur le même élément du tableau. Sans cet opérateur on obtient des évaluations avec des scores différents de 30 ou des grades différents de C.</p> <div class="highlight"><pre><span></span><code>  <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">restaurants</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
     <span class="s2">"grades.grade"</span> <span class="o">:</span> <span class="s2">"C"</span><span class="p">,</span>
     <span class="s2">"grades.score"</span> <span class="o">:</span> <span class="p">{</span><span class="nx">$lt</span> <span class="o">:</span> <span class="mi">30</span><span class="p">}</span>
