@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/index.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/advanced.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/crud.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/exercice.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/installation.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/replication.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hhmida.github.io/tp-nosql-mongodb/sharding.html</loc>
-         <lastmod>2022-10-04</lastmod>
+         <lastmod>2022-10-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
