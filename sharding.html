@@ -248,7 +248,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>  </span><span class=c1>## Shards 01   </span><span class=w></span>
 <span class=w>  </span><span class=nt>shard01-a</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-node-a</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-a</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -260,7 +260,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-c</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard01-b</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-node-b</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-b</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -269,7 +269,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27123:27017</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard01-c</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-node-c</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-c</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -280,7 +280,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>  </span><span class=c1>## Shards 02</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard02-a</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-node-a</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-a</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -292,7 +292,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-c</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard02-b</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-node-b</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-b</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -301,7 +301,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27126:27017</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard02-c</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-node-c</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-c</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -312,7 +312,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>  </span><span class=c1>## Shards 03</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard03-a</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-node-a</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-a</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -324,7 +324,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-c</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard03-b</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-node-b</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-b</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -333,7 +333,7 @@ Inspecter les propriétés et déterminer :
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27129:27017</span><span class=w></span>
 <span class=w>  </span><span class=nt>shard03-c</span><span class=p>:</span><span class=w></span>
 <span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-node-c</span><span class=w></span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-c</span><span class=w></span>
 <span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
 <span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span><span class=w></span>
 <span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
@@ -346,7 +346,7 @@ Inspecter les propriétés et déterminer :
 docker-compose <span class=nb>exec</span> shard02-a sh -c <span class=s2>&quot;mongosh &lt; /scripts/replicaset_2.js&quot;</span>
 docker-compose <span class=nb>exec</span> shard03-a sh -c <span class=s2>&quot;mongosh &lt; /scripts/replicaset_3.js&quot;</span>
 </code></pre></div></p> <p><img alt=4⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/34-20e3.svg title=:four:> Attendre l'élection des primary puis initialiser les routeurs</p> <p><div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> router01 sh -c <span class=s2>&quot;mongosh &lt; /scripts/router.js&quot;</span>
-</code></pre></div> <img alt=5⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/35-20e3.svg title=:five:> Vérifier le cluster :</p> <ul> <li> <p>Vérifier la réplication <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> shard-01-node-a mongosh
+</code></pre></div> <img alt=5⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/35-20e3.svg title=:five:> Vérifier le cluster :</p> <ul> <li> <p>Vérifier la réplication <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> shard-01-a mongosh
 </code></pre></div> et ensuite <code class=highlight><span class=nx>rs</span><span class=p>.</span><span class=nx>status</span><span class=p>()</span><span class=w></span></code></p> </li> <li> <p>Vérifier les shards <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> router01 mongosh
 </code></pre></div> et ensuite <code class=highlight><span class=nx>sh</span><span class=p>.</span><span class=nx>status</span><span class=p>()</span><span class=w></span></code></p> </li> </ul> <p><img alt=6⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/36-20e3.svg title=:six:> Distribuer une base de données</p> <ul> <li>Créer une nouvelle base et nouvelle collection. Puis créer un index sur _id.</li> </ul> <p><div class=highlight><pre><span></span><code><span class=o>&gt;</span><span class=w> </span><span class=nx>use</span><span class=w> </span><span class=nx>testDB</span><span class=p>;</span><span class=w></span>
 <span class=o>&gt;</span><span class=w> </span><span class=nx>sh</span><span class=p>.</span><span class=nx>enableSharding</span><span class=p>(</span><span class=s2>&quot;testDB&quot;</span><span class=p>);</span><span class=w></span>
