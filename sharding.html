@@ -1,4 +1,4 @@
-<!doctype html><html lang=fr class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Atelier MongoDB"><meta name=author content="Hmida Hmida"><link rel=canonical href=https://hhmida.github.io/tp-nosql-mongodb/sharding.html><link rel=icon href=assets/images/leaf.png><meta name=generator content="mkdocs-1.3.1, mkdocs-material-8.4.4"><title>Sharding - Bases de données NoSQL avec MongoDB</title><link rel=stylesheet href=assets/stylesheets/main.6b80c2a2.min.css><link rel=stylesheet href=assets/stylesheets/palette.cbb835fc.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=assets/stylesheets/extra.css><script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=red> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#mongdb-sharding class=md-skip> Aller au contenu </a> </div> <div data-md-component=announce> </div> <header class="md-header md-header--lifted" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=En-tête> <a href=index.html title="Bases de données NoSQL avec MongoDB" class="md-header__button md-logo" aria-label="Bases de données NoSQL avec MongoDB" data-md-component=logo> <svg viewbox="0 0 24 24" xmlns=http://www.w3.org/2000/svg><path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0 1 11.91 24h.481a28.48 28.48 0 0 1 .51-3.07c.417-.296.604-.463.85-.693a11.342 11.342 0 0 0 3.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Bases de données NoSQL avec MongoDB </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> Sharding </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=red aria-label="Basculer au mode sombre" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Basculer au mode sombre" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> <input class=md-option data-md-color-media data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=red aria-label="Basculer au mode clair" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Basculer au mode clair" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> </form> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Rechercher placeholder=Rechercher autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" aria-label=Effacer tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initialisation de la recherche </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> </nav> <nav class=md-tabs aria-label=Onglets data-md-component=tabs> <div class="md-tabs__inner md-grid"> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=index.html class=md-tabs__link> Introduction </a> </li> <li class=md-tabs__item> <a href=installation.html class=md-tabs__link> Installation et configuration </a> </li> <li class=md-tabs__item> <a href=crud.html class=md-tabs__link> Opérations de base </a> </li> <li class=md-tabs__item> <a href=advanced.html class=md-tabs__link> Opérations avancées </a> </li> <li class=md-tabs__item> <a href=exercice.html class=md-tabs__link> Exercices </a> </li> <li class=md-tabs__item> <a href=pymongo.html class=md-tabs__link> MongoDB avec Pymongo </a> </li> <li class=md-tabs__item> <a href=replication.html class=md-tabs__link> Replication </a> </li> <li class=md-tabs__item> <a href=sharding.html class="md-tabs__link md-tabs__link--active"> Sharding </a> </li> </ul> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=index.html title="Bases de données NoSQL avec MongoDB" class="md-nav__button md-logo" aria-label="Bases de données NoSQL avec MongoDB" data-md-component=logo> <svg viewbox="0 0 24 24" xmlns=http://www.w3.org/2000/svg><path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0 1 11.91 24h.481a28.48 28.48 0 0 1 .51-3.07c.417-.296.604-.463.85-.693a11.342 11.342 0 0 0 3.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"/></svg> </a> Bases de données NoSQL avec MongoDB </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=index.html class=md-nav__link> Introduction </a> </li> <li class=md-nav__item> <a href=installation.html class=md-nav__link> Installation et configuration </a> </li> <li class=md-nav__item> <a href=crud.html class=md-nav__link> Opérations de base </a> </li> <li class=md-nav__item> <a href=advanced.html class=md-nav__link> Opérations avancées </a> </li> <li class=md-nav__item> <a href=exercice.html class=md-nav__link> Exercices </a> </li> <li class=md-nav__item> <a href=pymongo.html class=md-nav__link> MongoDB avec Pymongo </a> </li> <li class=md-nav__item> <a href=replication.html class=md-nav__link> Replication </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> Sharding <span class="md-nav__icon md-icon"></span> </label> <a href=sharding.html class="md-nav__link md-nav__link--active"> Sharding </a> <nav class="md-nav md-nav--secondary" aria-label="Table des matières"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table des matières </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#definition class=md-nav__link> Définition </a> </li> <li class=md-nav__item> <a href=#principe-de-fonctionnement class=md-nav__link> Principe de fonctionnement </a> </li> <li class=md-nav__item> <a href=#replication-et-sharding-avec-docker class=md-nav__link> Réplication et Sharding avec Docker </a> </li> <li class=md-nav__item> <a href=#isolation-et-coherence class=md-nav__link> Isolation et cohérence </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <p><img src=assets/images/sharding/sharding.png width=15% height=15%></p> <h1 id=mongdb-sharding>MongDB Sharding<a class=headerlink href=#mongdb-sharding title="Permanent link">&para;</a></h1> <hr> <h2 id=definition>Définition<a class=headerlink href=#definition title="Permanent link">&para;</a></h2> <p>C'est une méthode de distribution des données sur plusieurs machines (cluster). Elle permet à MongoDB de passer à l'échelle pour accueillir des bases de données massives avec un débit très important.<br> Elle fait partie des techniques de mise à l'échelle horizontale : <strong>Horizontal scaling</strong>.</p> <details class=info open=open> <summary></summary> <p><strong>shard</strong> : éclat, tesson (fragment)</p> </details> <h2 id=principe-de-fonctionnement>Principe de fonctionnement<a class=headerlink href=#principe-de-fonctionnement title="Permanent link">&para;</a></h2> <p>Le cluster est composé de 3 types de serveurs :</p> <ol> <li><em>mongos</em> : routeur pour l'acheminement des requêtes.</li> <li><em>Config Server</em> : enregistre les métadonnées sur et la configuration pour le cluster.</li> <li><em>Shard</em> : contient un sous ensemble des données (chunk ou partition) qui peut être déployé comme Replica Set.</li> </ol> <p><img src=assets/images/sharding/sharding1.svg width=70% height=70%></p> <p>La distribution des données sur le cluster est basée sur une clé <mark>shard key</mark>. La clé peut être un ou plusieurs champs. Elle est utilisée dans l'une des deux stratégies de distribution :</p> <ul> <li>Hashed Sharding : un hash de clé détermine quelle dans quelle chunk mettre les données.</li> <li>Ranged Sharding : la clé est affecté à un chunk selon valeur.</li> </ul> <table> <thead> <tr> <th align=center><strong>Hashed Sharding</strong></th> <th align=center><strong>Ranged Sharding</strong></th> </tr> </thead> <tbody> <tr> <td align=center><img src=assets/images/sharding/sharding-hash.svg width=80% height=80%&amp;></td> <td align=center><img src=assets/images/sharding/sharding-range.svg width=80% height=80%></td> </tr> </tbody> </table> <!--
+<!doctype html><html lang=fr class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Atelier MongoDB"><meta name=author content="Hmida Hmida"><link rel=canonical href=https://hhmida.github.io/tp-nosql-mongodb/sharding.html><link rel=prev href=replication.html><link rel=icon href=assets/images/leaf.png><meta name=generator content="mkdocs-1.4.2, mkdocs-material-9.0.4"><title>Sharding - Bases de données NoSQL avec MongoDB</title><link rel=stylesheet href=assets/stylesheets/main.9c788c91.min.css><link rel=stylesheet href=assets/stylesheets/palette.2505c338.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=assets/stylesheets/extra.css><script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=red> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#mongdb-sharding class=md-skip> Aller au contenu </a> </div> <div data-md-component=announce> </div> <header class="md-header md-header--lifted" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=En-tête> <a href=index.html title="Bases de données NoSQL avec MongoDB" class="md-header__button md-logo" aria-label="Bases de données NoSQL avec MongoDB" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0 1 11.91 24h.481a28.48 28.48 0 0 1 .51-3.07c.417-.296.604-.463.85-.693a11.342 11.342 0 0 0 3.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Bases de données NoSQL avec MongoDB </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> Sharding </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=red aria-label="Basculer au mode sombre" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Basculer au mode sombre" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> <input class=md-option data-md-color-media data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=red aria-label="Basculer au mode clair" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Basculer au mode clair" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> </form> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Rechercher placeholder=Rechercher autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Effacer aria-label=Effacer tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initialisation de la recherche </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> </nav> <nav class=md-tabs aria-label=Onglets data-md-component=tabs> <div class="md-tabs__inner md-grid"> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=index.html class=md-tabs__link> Introduction </a> </li> <li class=md-tabs__item> <a href=installation.html class=md-tabs__link> Installation et configuration </a> </li> <li class=md-tabs__item> <a href=crud.html class=md-tabs__link> Opérations de base </a> </li> <li class=md-tabs__item> <a href=advanced.html class=md-tabs__link> Opérations avancées </a> </li> <li class=md-tabs__item> <a href=exercice.html class=md-tabs__link> Exercices </a> </li> <li class=md-tabs__item> <a href=pymongo.html class=md-tabs__link> MongoDB avec Pymongo </a> </li> <li class=md-tabs__item> <a href=replication.html class=md-tabs__link> Replication </a> </li> <li class=md-tabs__item> <a href=sharding.html class="md-tabs__link md-tabs__link--active"> Sharding </a> </li> </ul> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=index.html title="Bases de données NoSQL avec MongoDB" class="md-nav__button md-logo" aria-label="Bases de données NoSQL avec MongoDB" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0 1 11.91 24h.481a28.48 28.48 0 0 1 .51-3.07c.417-.296.604-.463.85-.693a11.342 11.342 0 0 0 3.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"/></svg> </a> Bases de données NoSQL avec MongoDB </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=index.html class=md-nav__link> Introduction </a> </li> <li class=md-nav__item> <a href=installation.html class=md-nav__link> Installation et configuration </a> </li> <li class=md-nav__item> <a href=crud.html class=md-nav__link> Opérations de base </a> </li> <li class=md-nav__item> <a href=advanced.html class=md-nav__link> Opérations avancées </a> </li> <li class=md-nav__item> <a href=exercice.html class=md-nav__link> Exercices </a> </li> <li class=md-nav__item> <a href=pymongo.html class=md-nav__link> MongoDB avec Pymongo </a> </li> <li class=md-nav__item> <a href=replication.html class=md-nav__link> Replication </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> Sharding <span class="md-nav__icon md-icon"></span> </label> <a href=sharding.html class="md-nav__link md-nav__link--active"> Sharding </a> <nav class="md-nav md-nav--secondary" aria-label="Table des matières"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table des matières </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#definition class=md-nav__link> Définition </a> </li> <li class=md-nav__item> <a href=#principe-de-fonctionnement class=md-nav__link> Principe de fonctionnement </a> </li> <li class=md-nav__item> <a href=#replication-et-sharding-avec-docker class=md-nav__link> Réplication et Sharding avec Docker </a> </li> <li class=md-nav__item> <a href=#isolation-et-coherence class=md-nav__link> Isolation et cohérence </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <p><img src=assets/images/sharding/sharding.png width=15% height=15%></p> <h1 id=mongdb-sharding>MongDB Sharding<a class=headerlink href=#mongdb-sharding title="Permanent link">&para;</a></h1> <hr> <h2 id=definition>Définition<a class=headerlink href=#definition title="Permanent link">&para;</a></h2> <p>C'est une méthode de distribution des données sur plusieurs machines (cluster). Elle permet à MongoDB de passer à l'échelle pour accueillir des bases de données massives avec un débit très important.<br> Elle fait partie des techniques de mise à l'échelle horizontale : <strong>Horizontal scaling</strong>.</p> <details class=info open=open> <summary></summary> <p><strong>shard</strong> : éclat, tesson (fragment)</p> </details> <h2 id=principe-de-fonctionnement>Principe de fonctionnement<a class=headerlink href=#principe-de-fonctionnement title="Permanent link">&para;</a></h2> <p>Le cluster est composé de 3 types de serveurs :</p> <ol> <li><em>mongos</em> : routeur pour l'acheminement des requêtes.</li> <li><em>Config Server</em> : enregistre les métadonnées sur et la configuration pour le cluster.</li> <li><em>Shard</em> : contient un sous ensemble des données (chunk ou partition) qui peut être déployé comme Replica Set.</li> </ol> <p><img src=assets/images/sharding/sharding1.svg width=70% height=70%></p> <p>La distribution des données sur le cluster est basée sur une clé <mark>shard key</mark>. La clé peut être un ou plusieurs champs. Elle est utilisée dans l'une des deux stratégies de distribution :</p> <ul> <li>Hashed Sharding : un hash de clé détermine quelle dans quelle chunk mettre les données.</li> <li>Ranged Sharding : la clé est affecté à un chunk selon valeur.</li> </ul> <table> <thead> <tr> <th align=center><strong>Hashed Sharding</strong></th> <th align=center><strong>Ranged Sharding</strong></th> </tr> </thead> <tbody> <tr> <td align=center><img src=assets/images/sharding/sharding-hash.svg width=80% height=80%&amp;></td> <td align=center><img src=assets/images/sharding/sharding-range.svg width=80% height=80%></td> </tr> </tbody> </table> <!--
 ## Mise en place du cluster avec Windows
 
 Le cluster est composé de 2 Config Server, 2 Shard et 1 Routeur
@@ -10,49 +10,49 @@ Le cluster est composé de 2 Config Server, 2 Shard et 1 Routeur
 ???+ hint "Configuration des Config Server"
     === "cs1.cfg"
         <div class="highlight"><pre><span></span><code>storage:
-  dbPath: C:<span class="se">\d</span>ata<span class="se">\c</span>s1
-  journal:
-    enabled: <span class="nb">true</span>
+<span class="w">  </span>dbPath:<span class="w"> </span>C:<span class="se">\d</span>ata<span class="se">\c</span>s1
+<span class="w">  </span>journal:
+<span class="w">    </span>enabled:<span class="w"> </span><span class="nb">true</span>
 systemLog:
-  destination: file
-  logAppend: <span class="nb">true</span>
-  path:  C:<span class="se">\l</span>ogs<span class="se">\l</span>ogcs1
+<span class="w">  </span>destination:<span class="w"> </span>file
+<span class="w">  </span>logAppend:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>path:<span class="w">  </span>C:<span class="se">\l</span>ogs<span class="se">\l</span>ogcs1
 net:
-  port: <span class="m">40001</span>
-  bindIp: <span class="m">127</span>.0.0.1
+<span class="w">  </span>port:<span class="w"> </span><span class="m">40001</span>
+<span class="w">  </span>bindIp:<span class="w"> </span><span class="m">127</span>.0.0.1
 sharding:
-  clusterRole: configsvr
+<span class="w">  </span>clusterRole:<span class="w"> </span>configsvr
 replication:
-  replSetName: csrs
+<span class="w">  </span>replSetName:<span class="w"> </span>csrs
 </code></pre></div>
     === "cs2.cfg"
         <div class="highlight"><pre><span></span><code>storage:
-  dbPath: C:<span class="se">\d</span>ata<span class="se">\c</span>s2
-  journal:
-    enabled: <span class="nb">true</span>
+<span class="w">  </span>dbPath:<span class="w"> </span>C:<span class="se">\d</span>ata<span class="se">\c</span>s2
+<span class="w">  </span>journal:
+<span class="w">    </span>enabled:<span class="w"> </span><span class="nb">true</span>
 systemLog:
-  destination: file
-  logAppend: <span class="nb">true</span>
-  path:  C:<span class="se">\l</span>ogs<span class="se">\l</span>ogcs2
+<span class="w">  </span>destination:<span class="w"> </span>file
+<span class="w">  </span>logAppend:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>path:<span class="w">  </span>C:<span class="se">\l</span>ogs<span class="se">\l</span>ogcs2
 net:
-  port: <span class="m">40002</span>
-  bindIp: <span class="m">127</span>.0.0.1
+<span class="w">  </span>port:<span class="w"> </span><span class="m">40002</span>
+<span class="w">  </span>bindIp:<span class="w"> </span><span class="m">127</span>.0.0.1
 sharding:
-  clusterRole: configsvr
+<span class="w">  </span>clusterRole:<span class="w"> </span>configsvr
 replication:
-  replSetName: csrs
+<span class="w">  </span>replSetName:<span class="w"> </span>csrs
 </code></pre></div>
 
 - Démarrer les 2 services et initier le Replica Set.
 
 === "Terminal Windows"
-<div class="highlight"><pre><span></span><code>start mongod --config C:<span class="se">\c</span>fg<span class="se">\c</span>s1.conf
-start mongod --config C:<span class="se">\c</span>fg<span class="se">\c</span>s2.conf
-mongo --port <span class="m">40001</span>
+<div class="highlight"><pre><span></span><code>start<span class="w"> </span>mongod<span class="w"> </span>--config<span class="w"> </span>C:<span class="se">\c</span>fg<span class="se">\c</span>s1.conf
+start<span class="w"> </span>mongod<span class="w"> </span>--config<span class="w"> </span>C:<span class="se">\c</span>fg<span class="se">\c</span>s2.conf
+mongo<span class="w"> </span>--port<span class="w"> </span><span class="m">40001</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span><span class="w"></span>
-<span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">add</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;localhost:40002&quot;</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">add</span><span class="w"> </span><span class="p">(</span><span class="s2">&quot;localhost:40002&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 
@@ -64,60 +64,60 @@ mongo --port <span class="m">40001</span>
 ???+ hint "Configuration des Shard Server"
     === "sh1.cfg"
         <div class="highlight"><pre><span></span><code>storage:
-  dbPath: C:<span class="se">\d</span>ata<span class="se">\s</span>h1
-  journal:
-    enabled: <span class="nb">true</span>
+<span class="w">  </span>dbPath:<span class="w"> </span>C:<span class="se">\d</span>ata<span class="se">\s</span>h1
+<span class="w">  </span>journal:
+<span class="w">    </span>enabled:<span class="w"> </span><span class="nb">true</span>
 systemLog:
-  destination: file
-  logAppend: <span class="nb">true</span>
-  path:  C:<span class="se">\l</span>ogs<span class="se">\l</span>ogsh1
+<span class="w">  </span>destination:<span class="w"> </span>file
+<span class="w">  </span>logAppend:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>path:<span class="w">  </span>C:<span class="se">\l</span>ogs<span class="se">\l</span>ogsh1
 net:
-  port: <span class="m">50001</span>
-  bindIp: <span class="m">127</span>.0.0.1
+<span class="w">  </span>port:<span class="w"> </span><span class="m">50001</span>
+<span class="w">  </span>bindIp:<span class="w"> </span><span class="m">127</span>.0.0.1
 sharding:
-  clusterRole: shardsvr
+<span class="w">  </span>clusterRole:<span class="w"> </span>shardsvr
 replication:
-  replSetName: shrs1
+<span class="w">  </span>replSetName:<span class="w"> </span>shrs1
 </code></pre></div>
     === "sh2.cfg"
         <div class="highlight"><pre><span></span><code>storage:
-  dbPath: C:<span class="se">\d</span>ata<span class="se">\s</span>h2
-  journal:
-    enabled: <span class="nb">true</span>
+<span class="w">  </span>dbPath:<span class="w"> </span>C:<span class="se">\d</span>ata<span class="se">\s</span>h2
+<span class="w">  </span>journal:
+<span class="w">    </span>enabled:<span class="w"> </span><span class="nb">true</span>
 systemLog:
-  destination: file
-  logAppend: <span class="nb">true</span>
-  path:  C:<span class="se">\l</span>ogs<span class="se">\l</span>ogsh2
+<span class="w">  </span>destination:<span class="w"> </span>file
+<span class="w">  </span>logAppend:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>path:<span class="w">  </span>C:<span class="se">\l</span>ogs<span class="se">\l</span>ogsh2
 net:
-  port: <span class="m">50002</span>
-  bindIp: <span class="m">127</span>.0.0.1
+<span class="w">  </span>port:<span class="w"> </span><span class="m">50002</span>
+<span class="w">  </span>bindIp:<span class="w"> </span><span class="m">127</span>.0.0.1
 sharding:
-  clusterRole: shardsvr
+<span class="w">  </span>clusterRole:<span class="w"> </span>shardsvr
 replication:
-  replSetName: shrs2
+<span class="w">  </span>replSetName:<span class="w"> </span>shrs2
 </code></pre></div>
 
 
 - Démarrer les 2 services et initier le Replica Set.
 
 === "Terminal Windows"
-<div class="highlight"><pre><span></span><code>start mongod --config C:<span class="se">\c</span>fg<span class="se">\s</span>h1.conf
-start mongod --config C:<span class="se">\c</span>fg<span class="se">\s</span>h2.conf
-mongo --port <span class="m">50001</span>
+<div class="highlight"><pre><span></span><code>start<span class="w"> </span>mongod<span class="w"> </span>--config<span class="w"> </span>C:<span class="se">\c</span>fg<span class="se">\s</span>h1.conf
+start<span class="w"> </span>mongod<span class="w"> </span>--config<span class="w"> </span>C:<span class="se">\c</span>fg<span class="se">\s</span>h2.conf
+mongo<span class="w"> </span>--port<span class="w"> </span><span class="m">50001</span>
 </code></pre></div>
 
 Puis dans le shell MongoDB :
-<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
 </code></pre></div>
 
 Puis le deuxième serveur
 
 === "Terminal Windows"
-<div class="highlight"><pre><span></span><code>mongo --port <span class="m">50002</span>
+<div class="highlight"><pre><span></span><code>mongo<span class="w"> </span>--port<span class="w"> </span><span class="m">50002</span>
 </code></pre></div>
 
 Et dans le shell MongoDB :
-<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">rs</span><span class="p">.</span><span class="nx">initiate</span><span class="p">()</span>
 </code></pre></div>
 
 ### :three: Lancer le Routeur
@@ -126,42 +126,42 @@ Et dans le shell MongoDB :
 
 === "mongos.cfg"
     <div class="highlight"><pre><span></span><code>sharding:
-  configDB: csrs/localhost:40001,localhost:40002
+<span class="w">  </span>configDB:<span class="w"> </span>csrs/localhost:40001,localhost:40002
 net:
-  bindIpAll: <span class="nb">true</span>
-  port: <span class="m">26000</span>
+<span class="w">  </span>bindIpAll:<span class="w"> </span><span class="nb">true</span>
+<span class="w">  </span>port:<span class="w"> </span><span class="m">26000</span>
 systemLog:
-  destination: file
-  path: D:<span class="se">\l</span>ogs<span class="se">\l</span>ogMongos
-  logAppend: <span class="nb">true</span>
+<span class="w">  </span>destination:<span class="w"> </span>file
+<span class="w">  </span>path:<span class="w"> </span>D:<span class="se">\l</span>ogs<span class="se">\l</span>ogMongos
+<span class="w">  </span>logAppend:<span class="w"> </span><span class="nb">true</span>
 </code></pre></div>
 
 - Démarrer et enregistrer les Shard
 
 === "Terminal Windows"  
-<div class="highlight"><pre><span></span><code>start mongos --config C:<span class="se">\c</span>fg<span class="se">\m</span>ongos.cfg
-mongo --port <span class="m">26000</span>
+<div class="highlight"><pre><span></span><code>start<span class="w"> </span>mongos<span class="w"> </span>--config<span class="w"> </span>C:<span class="se">\c</span>fg<span class="se">\m</span>ongos.cfg
+mongo<span class="w"> </span>--port<span class="w"> </span><span class="m">26000</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shrs1/127.0.0.1:50001&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shrs2/127.0.0.1:50002&quot;</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shrs1/127.0.0.1:50001&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">addShard</span><span class="p">(</span><span class="s2">&quot;shrs2/127.0.0.1:50002&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 ### :four: Distribuer une base de données
 
 - Créer une nouvelle base et nouvelle collection. Puis créer un index sur _id.
 
-<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">testDB</span><span class="p">;</span><span class="w"></span>
-<span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">enableSharding</span><span class="p">(</span><span class="s2">&quot;testDB&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="o">&gt;</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="o">&gt;</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="mf">1</span><span class="p">});</span><span class="w"></span>
-<span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">shardCollection</span><span class="p">(</span><span class="s2">&quot;testDB.test&quot;</span><span class="p">,{</span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="mf">1</span><span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">testDB</span><span class="p">;</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">enableSharding</span><span class="p">(</span><span class="s2">&quot;testDB&quot;</span><span class="p">);</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">);</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">createIndex</span><span class="p">({</span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="mf">1</span><span class="p">});</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nx">sh</span><span class="p">.</span><span class="nx">shardCollection</span><span class="p">(</span><span class="s2">&quot;testDB.test&quot;</span><span class="p">,{</span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="mf">1</span><span class="p">});</span>
 </code></pre></div>
 - Importer un dataset et vérifier l'état du Sharding.
 
 === "Terminal Windows"
-<div class="highlight"><pre><span></span><code>mongoimport -d testDB -c <span class="nb">test</span> --port <span class="m">26000</span> restaurants.json
-mongo --port <span class="m">26000</span> --eval <span class="s2">&quot;sh.status()&quot;</span>
+<div class="highlight"><pre><span></span><code>mongoimport<span class="w"> </span>-d<span class="w"> </span>testDB<span class="w"> </span>-c<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--port<span class="w"> </span><span class="m">26000</span><span class="w"> </span>restaurants.json
+mongo<span class="w"> </span>--port<span class="w"> </span><span class="m">26000</span><span class="w"> </span>--eval<span class="w"> </span><span class="s2">&quot;sh.status()&quot;</span>
 </code></pre></div>
 
 ???+ warning "Attention"
@@ -171,200 +171,200 @@ Inspecter les propriétés et déterminer :
 
 - La clé de sharding
 - Le nombre de shunks par shard
---> <h2 id=replication-et-sharding-avec-docker>Réplication et Sharding avec Docker<a class=headerlink href=#replication-et-sharding-avec-docker title="Permanent link">&para;</a></h2> <p>Le cluster à mettre en place est compsée des noeuds suivants :</p> <ul> <li><strong>2 Mongos</strong> (router): routage des requêtes vers les shards.<ul> <li><code>router01</code></li> <li><code>router02</code></li> </ul> </li> <li><strong>3 Config Servers</strong> : enregistre les métadonnées de la configuration du cluster<ul> <li><code>configsvr01</code></li> <li><code>configsvr02</code></li> <li><code>configsvr03</code></li> </ul> </li> <li><strong>3 Shards</strong> (avec un replica set de 3 membres) : détient une partie (shard) des données.<ul> <li><code>shard01-a</code>, <code>shard01-b</code>, <code>shard01-c</code></li> <li><code>shard02-a</code>, <code>shard02-b</code>, <code>shard02-c</code></li> <li><code>shard03-a</code>, <code>shard03-b</code>, <code>shard03-c</code></li> </ul> </li> </ul> <p><strong>docker-compose</strong> sera utilisé pour automatiser la gestion des différents containers (14 dans notre cas). Les fichiers nécessaires à cette manipulation sont mis dans cette archive <a href=assets/mongodb-cluster.zip>mongodb-cluster.zip</a> que vous devez télécharger et décompresser.</p> <p>Vous obtiendrez un dossier contenant :</p> <ul> <li><code>docker-compose.yaml</code> qui contient les paramètres des différents containers :</li> </ul> <div class=highlight><pre><span></span><code><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s>&#39;3&#39;</span><span class=w></span>
+--> <h2 id=replication-et-sharding-avec-docker>Réplication et Sharding avec Docker<a class=headerlink href=#replication-et-sharding-avec-docker title="Permanent link">&para;</a></h2> <p>Le cluster à mettre en place est compsée des noeuds suivants :</p> <ul> <li><strong>2 Mongos</strong> (router): routage des requêtes vers les shards.<ul> <li><code>router01</code></li> <li><code>router02</code></li> </ul> </li> <li><strong>3 Config Servers</strong> : enregistre les métadonnées de la configuration du cluster<ul> <li><code>configsvr01</code></li> <li><code>configsvr02</code></li> <li><code>configsvr03</code></li> </ul> </li> <li><strong>3 Shards</strong> (avec un replica set de 3 membres) : détient une partie (shard) des données.<ul> <li><code>shard01-a</code>, <code>shard01-b</code>, <code>shard01-c</code></li> <li><code>shard02-a</code>, <code>shard02-b</code>, <code>shard02-c</code></li> <li><code>shard03-a</code>, <code>shard03-b</code>, <code>shard03-c</code></li> </ul> </li> </ul> <p><strong>docker-compose</strong> sera utilisé pour automatiser la gestion des différents containers (14 dans notre cas). Les fichiers nécessaires à cette manipulation sont mis dans cette archive <a href=assets/mongodb-cluster.zip>mongodb-cluster.zip</a> que vous devez télécharger et décompresser.</p> <p>Vous obtiendrez un dossier contenant :</p> <ul> <li><code>docker-compose.yaml</code> qui contient les paramètres des différents containers :</li> </ul> <div class=highlight><pre><span></span><code><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s>&#39;3&#39;</span>
 
-<span class=nt>services</span><span class=p>:</span><span class=w></span>
-<span class=c1># Router</span><span class=w></span>
+<span class=nt>services</span><span class=p>:</span>
+<span class=c1># Router</span>
 
-<span class=w>  </span><span class=c1>## router 01</span><span class=w></span>
-<span class=w>  </span><span class=nt>router01</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">router-01</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongos --port 27017 --configdb rs-config-server/configsvr01:27017,configsvr02:27017,configsvr03:27017 --bind_ip_all</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27117:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
+<span class=w>  </span><span class=c1>## router 01</span>
+<span class=w>  </span><span class=nt>router01</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">router-01</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongos --port 27017 --configdb rs-config-server/configsvr01:27017,configsvr02:27017,configsvr03:27017 --bind_ip_all</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27117:27017</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
 
-<span class=w>  </span><span class=c1>## router 02</span><span class=w></span>
-<span class=w>  </span><span class=nt>router02</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">router-02</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongos --port 27017 --configdb rs-config-server/configsvr01:27017,configsvr02:27017,configsvr03:27017 --bind_ip_all</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27118:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">router01</span><span class=w></span>
+<span class=w>  </span><span class=c1>## router 02</span>
+<span class=w>  </span><span class=nt>router02</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">router-02</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongos --port 27017 --configdb rs-config-server/configsvr01:27017,configsvr02:27017,configsvr03:27017 --bind_ip_all</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27118:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">router01</span>
 
-<span class=c1># Config Servers</span><span class=w></span>
+<span class=c1># Config Servers</span>
 
-<span class=w>  </span><span class=c1>## Config server 01</span><span class=w></span>
-<span class=w>  </span><span class=nt>configsvr01</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
+<span class=w>  </span><span class=c1>## Config server 01</span>
+<span class=w>  </span><span class=nt>configsvr01</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
 <span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo-config-01</span><span class=w> </span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --configsvr --replSet rs-config-server</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --configsvr --replSet rs-config-server</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
 <span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w> </span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27119:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-a</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-a</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-a</span><span class=w></span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27119:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-a</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-a</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-a</span>
 
-<span class=w>  </span><span class=c1>## Config server 02</span><span class=w></span>
-<span class=w>  </span><span class=nt>configsvr02</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
+<span class=w>  </span><span class=c1>## Config server 02</span>
+<span class=w>  </span><span class=nt>configsvr02</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
 <span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo-config-02</span><span class=w> </span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --configsvr --replSet rs-config-server</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27120:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">configsvr01</span><span class=w></span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --configsvr --replSet rs-config-server</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27120:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">configsvr01</span>
 
-<span class=w>  </span><span class=c1>## Config server 03</span><span class=w></span>
-<span class=w>  </span><span class=nt>configsvr03</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
+<span class=w>  </span><span class=c1>## Config server 03</span>
+<span class=w>  </span><span class=nt>configsvr03</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
 <span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo-config-03</span><span class=w> </span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --configsvr --replSet rs-config-server</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27121:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">configsvr02</span><span class=w></span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --configsvr --replSet rs-config-server</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27121:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">configsvr02</span>
 
-<span class=c1># Shards</span><span class=w></span>
+<span class=c1># Shards</span>
 
-<span class=w>  </span><span class=c1>## Shards 01   </span><span class=w></span>
-<span class=w>  </span><span class=nt>shard01-a</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-a</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27122:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-b</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-c</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard01-b</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-b</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27123:27017</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard01-c</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-c</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27124:27017</span><span class=w></span>
+<span class=w>  </span><span class=c1>## Shards 01   </span>
+<span class=w>  </span><span class=nt>shard01-a</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-a</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27122:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-b</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard01-c</span>
+<span class=w>  </span><span class=nt>shard01-b</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-b</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27123:27017</span>
+<span class=w>  </span><span class=nt>shard01-c</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-01-c</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-01</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27124:27017</span>
 
-<span class=w>  </span><span class=c1>## Shards 02</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard02-a</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-a</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27125:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-b</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-c</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard02-b</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-b</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27126:27017</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard02-c</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-c</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27127:27017</span><span class=w></span>
+<span class=w>  </span><span class=c1>## Shards 02</span>
+<span class=w>  </span><span class=nt>shard02-a</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-a</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27125:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-b</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard02-c</span>
+<span class=w>  </span><span class=nt>shard02-b</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-b</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27126:27017</span>
+<span class=w>  </span><span class=nt>shard02-c</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-02-c</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-02</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27127:27017</span>
 
-<span class=w>  </span><span class=c1>## Shards 03</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard03-a</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-a</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27128:27017</span><span class=w></span>
-<span class=w>    </span><span class=nt>links</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-b</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-c</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard03-b</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-b</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27129:27017</span><span class=w></span>
-<span class=w>  </span><span class=nt>shard03-c</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span><span class=w></span>
-<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-c</span><span class=w></span>
-<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span><span class=w></span>
-<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span><span class=w></span>
-<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span><span class=w></span>
-<span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
-<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27130:27017</span><span class=w></span>
-</code></pre></div> <ul> <li>Un dossier <code>scripts</code> :fontawesome-icons-folder: contenant les scripts d'initialisation de replica set et shards, les routeurs et les serveurs de configuration.</li> </ul> <p><img alt=1⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/31-20e3.svg title=:one:> Démarrer la pile de containers</p> <div class=highlight><pre><span></span><code>docker-compose up -d
-</code></pre></div> <p><img alt=2⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/32-20e3.svg title=:two:> Initialiser les serveurs de configuration</p> <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> configsvr01 sh -c <span class=s2>&quot;mongosh &lt; /scripts/configserver.js&quot;</span>
-</code></pre></div> <p><img alt=3⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/33-20e3.svg title=:three:> Initialiser les shards <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> shard01-a sh -c <span class=s2>&quot;mongosh &lt; /scripts/replicaset_1.js&quot;</span>
-docker-compose <span class=nb>exec</span> shard02-a sh -c <span class=s2>&quot;mongosh &lt; /scripts/replicaset_2.js&quot;</span>
-docker-compose <span class=nb>exec</span> shard03-a sh -c <span class=s2>&quot;mongosh &lt; /scripts/replicaset_3.js&quot;</span>
-</code></pre></div></p> <p><img alt=4⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/34-20e3.svg title=:four:> Attendre l'élection des primary puis initialiser les routeurs</p> <p><div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> router01 sh -c <span class=s2>&quot;mongosh &lt; /scripts/router.js&quot;</span>
-</code></pre></div> <img alt=5⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/35-20e3.svg title=:five:> Vérifier le cluster :</p> <ul> <li> <p>Vérifier la réplication <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> shard-01-a mongosh
-</code></pre></div> et ensuite <code class=highlight><span class=nx>rs</span><span class=p>.</span><span class=nx>status</span><span class=p>()</span><span class=w></span></code></p> </li> <li> <p>Vérifier les shards <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> router01 mongosh
-</code></pre></div> et ensuite <code class=highlight><span class=nx>sh</span><span class=p>.</span><span class=nx>status</span><span class=p>()</span><span class=w></span></code></p> </li> </ul> <p><img alt=6⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/36-20e3.svg title=:six:> Distribuer une base de données</p> <ul> <li>Créer une nouvelle base et nouvelle collection. Puis créer un index sur _id.</li> </ul> <p><div class=highlight><pre><span></span><code><span class=o>&gt;</span><span class=w> </span><span class=nx>use</span><span class=w> </span><span class=nx>testDB</span><span class=p>;</span><span class=w></span>
-<span class=o>&gt;</span><span class=w> </span><span class=nx>sh</span><span class=p>.</span><span class=nx>enableSharding</span><span class=p>(</span><span class=s2>&quot;testDB&quot;</span><span class=p>);</span><span class=w></span>
-<span class=o>&gt;</span><span class=w> </span><span class=nx>db</span><span class=p>.</span><span class=nx>createCollection</span><span class=p>(</span><span class=s2>&quot;test&quot;</span><span class=p>);</span><span class=w></span>
-<span class=o>&gt;</span><span class=w> </span><span class=nx>db</span><span class=p>.</span><span class=nx>test</span><span class=p>.</span><span class=nx>createIndex</span><span class=p>({</span><span class=s2>&quot;_id&quot;</span><span class=o>:</span><span class=mf>1</span><span class=p>});</span><span class=w></span>
-<span class=o>&gt;</span><span class=w> </span><span class=nx>sh</span><span class=p>.</span><span class=nx>shardCollection</span><span class=p>(</span><span class=s2>&quot;testDB.test&quot;</span><span class=p>,{</span><span class=s2>&quot;_id&quot;</span><span class=o>:</span><span class=mf>1</span><span class=p>});</span><span class=w></span>
-</code></pre></div> - Importer un dataset et vérifier l'état du Sharding.</p> <div class="tabbed-set tabbed-alternate" data-tabs=1:1><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><div class=tabbed-labels><label for=__tabbed_1_1>Terminal</label></div> <div class=tabbed-content> <div class=tabbed-block></div> </div> </div> <div class=highlight><pre><span></span><code>mongoimport -d testDB -c <span class=nb>test</span> --port <span class=m>26000</span> restaurants.json
-mongo --port <span class=m>26000</span> --eval <span class=s2>&quot;sh.status()&quot;</span>
-</code></pre></div> <details class=warning open=open> <summary>Attention</summary> <p>Les requêtes sont destinées au routeur.</p> </details> <p>Inspecter les propriétés et déterminer :</p> <ul> <li>La clé de sharding</li> <li>Le nombre de shunks par shard</li> </ul> <h2 id=isolation-et-coherence>Isolation et cohérence<a class=headerlink href=#isolation-et-coherence title="Permanent link">&para;</a></h2> <p>Dans ce quit, nous configurons les niveaux de cohérence avec les paramètres <strong>readConcern</strong> et <strong>writeConcern</strong>.</p> <p><img alt=1⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/31-20e3.svg title=:one:> Se connecter à un routeur</p> <div class=highlight><pre><span></span><code>docker-compose <span class=nb>exec</span> -it router01 mongosh
-</code></pre></div> <p><img alt=2⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/32-20e3.svg title=:two:> <strong>readConcern</strong></p> <div class=highlight><pre><span></span><code><span class=nx>use</span><span class=w> </span><span class=nx>testdb</span><span class=p>;</span><span class=w></span>
-<span class=nx>db</span><span class=p>.</span><span class=nx>test</span><span class=p>.</span><span class=nx>find</span><span class=p>({}).</span><span class=nx>readConcern</span><span class=p>(</span><span class=s2>&quot;majority&quot;</span><span class=p>);</span><span class=w></span>
-</code></pre></div> <p><img alt=2⃣ class=twemoji src=https://twemoji.maxcdn.com/v/latest/svg/32-20e3.svg title=:two:> <strong>writeConcern</strong> <div class=highlight><pre><span></span><code><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w></span>
-<span class=w>  </span><span class=nx>db</span><span class=p>.</span><span class=nx>test</span><span class=p>.</span><span class=nx>updateMany</span><span class=p>(</span><span class=w></span>
-<span class=w>    </span><span class=p>{</span><span class=w> </span><span class=s2>&quot;name&quot;</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=s2>&quot;Pizza Rat&#39;s Pizzaria&quot;</span><span class=w> </span><span class=p>},</span><span class=w></span>
-<span class=w>    </span><span class=p>{</span><span class=w> </span><span class=nx>$inc</span><span class=o>:</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=s2>&quot;violations&quot;</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mf>3</span><span class=p>},</span><span class=w> </span><span class=nx>$set</span><span class=o>:</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=s2>&quot;Closed&quot;</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=kc>true</span><span class=w> </span><span class=p>}</span><span class=w> </span><span class=p>},</span><span class=w></span>
-<span class=w>    </span><span class=p>{</span><span class=w> </span><span class=nx>w</span><span class=o>:</span><span class=w> </span><span class=s2>&quot;majority&quot;</span><span class=p>,</span><span class=w> </span><span class=nx>wtimeout</span><span class=o>:</span><span class=w> </span><span class=mf>100</span><span class=w> </span><span class=p>}</span><span class=w></span>
-<span class=w>  </span><span class=p>);</span><span class=w></span>
-<span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=nx>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w></span>
-<span class=w>  </span><span class=nx>print</span><span class=p>(</span><span class=nx>e</span><span class=p>);</span><span class=w></span>
-<span class=p>}</span><span class=w></span>
-</code></pre></div></p> </article> </div> </div> <a href=# class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg> Retour en haut de la page </a> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label="Pied de page"> <a href=replication.html class="md-footer__link md-footer__link--prev" aria-label="Précédent: Replication" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Précédent </span> Replication </div> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright &copy; 2021 - Dr. Hmida Hmida </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://gitlab.com/hhmida target=_blank rel=noopener title=gitlab.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="m503.5 204.6-.7-1.8-69.7-181.78c-1.4-3.57-3.9-6.59-7.2-8.64-2.4-1.55-5.1-2.515-8-2.81-2.9-.295-5.7.083-8.4 1.11-2.7 1.02-5.1 2.66-7.1 4.78-1.9 2.12-3.3 4.67-4.1 7.44l-47 144H160.8l-47.1-144c-.8-2.77-2.2-5.31-4.1-7.43-2-2.12-4.4-3.75-7.1-4.77a18.1 18.1 0 0 0-8.38-1.113 18.4 18.4 0 0 0-8.04 2.793 18.09 18.09 0 0 0-7.16 8.64L9.267 202.8l-.724 1.8a129.57 129.57 0 0 0-3.52 82c7.747 26.9 24.047 50.7 46.447 67.6l.27.2.59.4 105.97 79.5 52.6 39.7 32 24.2c3.7 1.9 8.3 4.3 13 4.3 4.7 0 9.3-2.4 13-4.3l32-24.2 52.6-39.7 106.7-79.9.3-.3c22.4-16.9 38.7-40.6 45.6-67.5 8.6-27 7.4-55.8-2.6-82z"/></svg> </a> <a href=https://github.com/hhmida target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 480 512"><!-- Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg> </a> <a href=https://linkedin.com/in/hhmida target=_blank rel=noopener title=linkedin.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top", "toc.integrate", "content.code.annotate"], "search": "assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}}</script> <script src=assets/javascripts/bundle.2ab50757.min.js></script> </body> </html>
+<span class=w>  </span><span class=c1>## Shards 03</span>
+<span class=w>  </span><span class=nt>shard03-a</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-a</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27128:27017</span>
+<span class=w>    </span><span class=nt>links</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-b</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard03-c</span>
+<span class=w>  </span><span class=nt>shard03-b</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-b</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27129:27017</span>
+<span class=w>  </span><span class=nt>shard03-c</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">mongo:6.0.1</span>
+<span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">shard-03-c</span>
+<span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class="p p-Indicator">|</span>
+<span class=w>      </span><span class=no>mongod --port 27017 --shardsvr --replSet rs-shard-03</span>
+<span class=w>    </span><span class=nt>volumes</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">./scripts:/scripts</span>
+<span class=w>    </span><span class=nt>ports</span><span class=p>:</span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">27130:27017</span>
+</code></pre></div> <ul> <li>Un dossier <code>scripts</code> :fontawesome-icons-folder: contenant les scripts d'initialisation de replica set et shards, les routeurs et les serveurs de configuration.</li> </ul> <p><img alt=1⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/31-20e3.svg title=:one:> Démarrer la pile de containers</p> <div class=highlight><pre><span></span><code>docker-compose<span class=w> </span>up<span class=w> </span>-d
+</code></pre></div> <p><img alt=2⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/32-20e3.svg title=:two:> Initialiser les serveurs de configuration</p> <div class=highlight><pre><span></span><code>docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>configsvr01<span class=w> </span>sh<span class=w> </span>-c<span class=w> </span><span class=s2>&quot;mongosh &lt; /scripts/configserver.js&quot;</span>
+</code></pre></div> <p><img alt=3⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/33-20e3.svg title=:three:> Initialiser les shards <div class=highlight><pre><span></span><code>docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>shard01-a<span class=w> </span>sh<span class=w> </span>-c<span class=w> </span><span class=s2>&quot;mongosh &lt; /scripts/replicaset_1.js&quot;</span>
+docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>shard02-a<span class=w> </span>sh<span class=w> </span>-c<span class=w> </span><span class=s2>&quot;mongosh &lt; /scripts/replicaset_2.js&quot;</span>
+docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>shard03-a<span class=w> </span>sh<span class=w> </span>-c<span class=w> </span><span class=s2>&quot;mongosh &lt; /scripts/replicaset_3.js&quot;</span>
+</code></pre></div></p> <p><img alt=4⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/34-20e3.svg title=:four:> Attendre l'élection des primary puis initialiser les routeurs</p> <p><div class=highlight><pre><span></span><code>docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>router01<span class=w> </span>sh<span class=w> </span>-c<span class=w> </span><span class=s2>&quot;mongosh &lt; /scripts/router.js&quot;</span>
+</code></pre></div> <img alt=5⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/35-20e3.svg title=:five:> Vérifier le cluster :</p> <ul> <li> <p>Vérifier la réplication <div class=highlight><pre><span></span><code>docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>shard-01-a<span class=w> </span>mongosh
+</code></pre></div> et ensuite <code class=highlight><span class=nx>rs</span><span class=p>.</span><span class=nx>status</span><span class=p>()</span></code></p> </li> <li> <p>Vérifier les shards <div class=highlight><pre><span></span><code>docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>router01<span class=w> </span>mongosh
+</code></pre></div> et ensuite <code class=highlight><span class=nx>sh</span><span class=p>.</span><span class=nx>status</span><span class=p>()</span></code></p> </li> </ul> <p><img alt=6⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/36-20e3.svg title=:six:> Distribuer une base de données</p> <ul> <li>Créer une nouvelle base et nouvelle collection. Puis créer un index sur _id.</li> </ul> <p><div class=highlight><pre><span></span><code><span class=o>&gt;</span><span class=w> </span><span class=nx>use</span><span class=w> </span><span class=nx>testDB</span><span class=p>;</span>
+<span class=o>&gt;</span><span class=w> </span><span class=nx>sh</span><span class=p>.</span><span class=nx>enableSharding</span><span class=p>(</span><span class=s2>&quot;testDB&quot;</span><span class=p>);</span>
+<span class=o>&gt;</span><span class=w> </span><span class=nx>db</span><span class=p>.</span><span class=nx>createCollection</span><span class=p>(</span><span class=s2>&quot;test&quot;</span><span class=p>);</span>
+<span class=o>&gt;</span><span class=w> </span><span class=nx>db</span><span class=p>.</span><span class=nx>test</span><span class=p>.</span><span class=nx>createIndex</span><span class=p>({</span><span class=s2>&quot;_id&quot;</span><span class=o>:</span><span class=mf>1</span><span class=p>});</span>
+<span class=o>&gt;</span><span class=w> </span><span class=nx>sh</span><span class=p>.</span><span class=nx>shardCollection</span><span class=p>(</span><span class=s2>&quot;testDB.test&quot;</span><span class=p>,{</span><span class=s2>&quot;_id&quot;</span><span class=o>:</span><span class=mf>1</span><span class=p>});</span>
+</code></pre></div> - Importer un dataset et vérifier l'état du Sharding.</p> <div class="tabbed-set tabbed-alternate" data-tabs=1:1><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><div class=tabbed-labels><label for=__tabbed_1_1>Terminal</label></div> <div class=tabbed-content> <div class=tabbed-block></div> </div> </div> <div class=highlight><pre><span></span><code>mongoimport<span class=w> </span>-d<span class=w> </span>testDB<span class=w> </span>-c<span class=w> </span><span class=nb>test</span><span class=w> </span>--port<span class=w> </span><span class=m>26000</span><span class=w> </span>restaurants.json
+mongo<span class=w> </span>--port<span class=w> </span><span class=m>26000</span><span class=w> </span>--eval<span class=w> </span><span class=s2>&quot;sh.status()&quot;</span>
+</code></pre></div> <details class=warning open=open> <summary>Attention</summary> <p>Les requêtes sont destinées au routeur.</p> </details> <p>Inspecter les propriétés et déterminer :</p> <ul> <li>La clé de sharding</li> <li>Le nombre de shunks par shard</li> </ul> <h2 id=isolation-et-coherence>Isolation et cohérence<a class=headerlink href=#isolation-et-coherence title="Permanent link">&para;</a></h2> <p>Dans ce quit, nous configurons les niveaux de cohérence avec les paramètres <strong>readConcern</strong> et <strong>writeConcern</strong>.</p> <p><img alt=1⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/31-20e3.svg title=:one:> Se connecter à un routeur</p> <div class=highlight><pre><span></span><code>docker-compose<span class=w> </span><span class=nb>exec</span><span class=w> </span>-it<span class=w> </span>router01<span class=w> </span>mongosh
+</code></pre></div> <p><img alt=2⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/32-20e3.svg title=:two:> <strong>readConcern</strong></p> <div class=highlight><pre><span></span><code><span class=nx>use</span><span class=w> </span><span class=nx>testdb</span><span class=p>;</span>
+<span class=nx>db</span><span class=p>.</span><span class=nx>test</span><span class=p>.</span><span class=nx>find</span><span class=p>({}).</span><span class=nx>readConcern</span><span class=p>(</span><span class=s2>&quot;majority&quot;</span><span class=p>);</span>
+</code></pre></div> <p><img alt=2⃣ class=twemoji src=https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/32-20e3.svg title=:two:> <strong>writeConcern</strong> <div class=highlight><pre><span></span><code><span class=k>try</span><span class=w> </span><span class=p>{</span>
+<span class=w>  </span><span class=nx>db</span><span class=p>.</span><span class=nx>test</span><span class=p>.</span><span class=nx>updateMany</span><span class=p>(</span>
+<span class=w>    </span><span class=p>{</span><span class=w> </span><span class=s2>&quot;name&quot;</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=s2>&quot;Pizza Rat&#39;s Pizzaria&quot;</span><span class=w> </span><span class=p>},</span>
+<span class=w>    </span><span class=p>{</span><span class=w> </span><span class=nx>$inc</span><span class=o>:</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=s2>&quot;violations&quot;</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=mf>3</span><span class=p>},</span><span class=w> </span><span class=nx>$set</span><span class=o>:</span><span class=w> </span><span class=p>{</span><span class=w> </span><span class=s2>&quot;Closed&quot;</span><span class=w> </span><span class=o>:</span><span class=w> </span><span class=kc>true</span><span class=w> </span><span class=p>}</span><span class=w> </span><span class=p>},</span>
+<span class=w>    </span><span class=p>{</span><span class=w> </span><span class=nx>w</span><span class=o>:</span><span class=w> </span><span class=s2>&quot;majority&quot;</span><span class=p>,</span><span class=w> </span><span class=nx>wtimeout</span><span class=o>:</span><span class=w> </span><span class=mf>100</span><span class=w> </span><span class=p>}</span>
+<span class=w>  </span><span class=p>);</span>
+<span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=nx>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+<span class=w>  </span><span class=nx>print</span><span class=p>(</span><span class=nx>e</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div></p> </article> </div> </div> <a href=# class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg> Retour en haut de la page </a> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright &copy; 2021 - Dr. Hmida Hmida </div> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://gitlab.com/hhmida target=_blank rel=noopener title=gitlab.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="m503.5 204.6-.7-1.8-69.7-181.78c-1.4-3.57-3.9-6.59-7.2-8.64-2.4-1.55-5.1-2.515-8-2.81-2.9-.295-5.7.083-8.4 1.11-2.7 1.02-5.1 2.66-7.1 4.78-1.9 2.12-3.3 4.67-4.1 7.44l-47 144H160.8l-47.1-144c-.8-2.77-2.2-5.31-4.1-7.43-2-2.12-4.4-3.75-7.1-4.77a18.1 18.1 0 0 0-8.38-1.113 18.4 18.4 0 0 0-8.04 2.793 18.09 18.09 0 0 0-7.16 8.64L9.267 202.8l-.724 1.8a129.57 129.57 0 0 0-3.52 82c7.747 26.9 24.047 50.7 46.447 67.6l.27.2.59.4 105.97 79.5 52.6 39.7 32 24.2c3.7 1.9 8.3 4.3 13 4.3 4.7 0 9.3-2.4 13-4.3l32-24.2 52.6-39.7 106.7-79.9.3-.3c22.4-16.9 38.7-40.6 45.6-67.5 8.6-27 7.4-55.8-2.6-82z"/></svg> </a> <a href=https://github.com/hhmida target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 480 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg> </a> <a href=https://linkedin.com/in/hhmida target=_blank rel=noopener title=linkedin.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top", "toc.integrate", "content.code.annotate"], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script> <script src=assets/javascripts/bundle.ba449ae6.min.js></script> </body> </html>
